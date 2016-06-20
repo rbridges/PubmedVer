@@ -537,8 +537,8 @@ of the puerperium, not elsewhere classified'  &  (`other unspecified complicatio
 \end{table*}
 
 Each phenotypic item is assigned a ranked list, based on the relevance score, of representative n--grams.
-Table \ref{tab:pheno-n-gram}~shows four examples of the original phenotypic item and the ranked list with the eight  highest ranked n-grams and their associated relevance scores.
-Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced many false positives. Using six of the top ranked n-grams gave a tolerable number of false positives.
+Table \ref{tab:pheno-n-gram}~shows four examples of the original phenotypic item and the ranked list with the eight highest ranked n-grams and their associated relevance scores.
+Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced many false positives. Using six of the top ranked n-grams gave a tolerable number of false positives. Thus, we represent each phenotypic item with its top 6 relevant n-grams.
 In addition to restricting each representation to six n-grams, we pared down the list of aliases even more by ordering the set of all n--grams by their sentence frequency in PubMed, as well as their interaction frequency with other phenotypes, and removing the most frequent 5\% from the sentence frequency and interaction frequency lists.
 Table \ref{tab:uninformative-n-gram} lists the removed features and the items that are typically uninformative or generic.
 More work on consensus filtration, however, is merited.
