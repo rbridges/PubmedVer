@@ -577,7 +577,7 @@ For all articles in the subset, any sentence containing one or more of the n-gra
 Each sentence was minimally processed, only regularizing capitalization and encoding (utf-8), taking out words included in NLTK's English stopword list, using a conservative regular expression to remove references (e.g. Smith, et al.), and removing special characters like quotes and parenthesis. %\jette{You should probably state all preprocessing you did here.} 
 The form/tense and spelling of words were left as written to be consistent with the n-grams derived from the ontology related phrases.
 
-Any occurrence of an n-gram that was a part of the set of 3 to 5 n-grams representing a phenotype counted as an appearance for its phenotypic item.
+Any occurrence of an n-gram that was a part of the set of 3 to 6 n-grams representing a phenotype counted as an appearance for its phenotypic item.
 This simplifying assumption eliminated the need to weigh n-grams by their ``relevance".
 The assumption also ignores if a sentence contains more than one n-gram for an item.
 Using this measure of co-occurrence, the lift of every co-occurrence of phenotypic items was calculated. Recall that given A, B, and C in a sentence:
