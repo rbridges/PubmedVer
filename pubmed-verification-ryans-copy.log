@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  20 JUN 2016 13:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  20 JUN 2016 14:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -454,60 +454,72 @@ Overfull \hbox (4.01274pt too wide) in paragraph at lines 627--636
 44
  []
 
-<figures/kho_josh_all2.png, id=41, 578.16pt x 433.62pt>
+<figures/lift-process-cartoon.png, id=41, 888.921pt x 248.127pt>
+File: figures/lift-process-cartoon.png Graphic file (type png)
+
+<use figures/lift-process-cartoon.png>
+Package pdftex.def Info: figures/lift-process-cartoon.png used on input line 64
+2.
+(pdftex.def)             Requested size: 504.0pt x 140.68419pt.
+
+<figures/kho_josh_all2.png, id=42, 578.16pt x 433.62pt>
 File: figures/kho_josh_all2.png Graphic file (type png)
 
 <use figures/kho_josh_all2.png>
-Package pdftex.def Info: figures/kho_josh_all2.png used on input line 667.
+Package pdftex.def Info: figures/kho_josh_all2.png used on input line 675.
 (pdftex.def)             Requested size: 240.0pt x 179.99525pt.
 
-<figures/classificationWithVariableNG.png, id=42, 578.16pt x 433.62pt>
+<figures/classificationWithVariableNG.png, id=43, 578.16pt x 433.62pt>
 File: figures/classificationWithVariableNG.png Graphic file (type png)
 
 <use figures/classificationWithVariableNG.png>
 Package pdftex.def Info: figures/classificationWithVariableNG.png used on input
- line 674.
+ line 682.
 (pdftex.def)             Requested size: 240.0pt x 179.99525pt.
 
-<figures/normalizedLiftAvg_labeled_Ordered.png, id=43, 578.16pt x 433.62pt>
+<figures/normalizedLiftAvg_labeled_Ordered.png, id=44, 578.16pt x 433.62pt>
 File: figures/normalizedLiftAvg_labeled_Ordered.png Graphic file (type png)
 
 <use figures/normalizedLiftAvg_labeled_Ordered.png>
 Package pdftex.def Info: figures/normalizedLiftAvg_labeled_Ordered.png used on 
-input line 682.
+input line 690.
 (pdftex.def)             Requested size: 240.0pt x 179.99525pt.
  [7 <./figures/logLiftsAcrossPhenoCard_MMM_kho.png>] (./pubmed-verification-rya
-ns-copy.bbl [8 <./figures/kho_josh_all2.png> <./figures/classificationWithVaria
-bleNG.png> <./figures/normalizedLiftAvg_labeled_Ordered.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ns-copy.bbl [8 <./figures/lift-process-cartoon.png> <./figures/kho_josh_all2.pn
+g> <./figures/classificationWithVariableNG.png>]
+Underfull \vbox (badness 3849) has occurred while \output is active []
 
-) [9]
-(./pubmed-verification-ryans-copy.aux) ) 
+) [9 <./figures/normalizedLiftAvg_labeled_Ordered.png>]
+(./pubmed-verification-ryans-copy.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3373 strings out of 493089
- 44882 string characters out of 6134842
+ 3379 strings out of 493089
+ 45080 string characters out of 6134842
  119343 words of memory out of 5000000
- 6735 multiletter control sequences out of 15000+600000
+ 6740 multiletter control sequences out of 15000+600000
  57480 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,11n,35p,845b,475s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fon
-ts/enc/dvips/base/8r.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmmi9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-sy9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texliv
-e/2015/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on pubmed-verification-ryans-copy.pdf (9 pages, 573736 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2015/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2015/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2015/texmf-d
+ist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2015/texmf-dist/fon
+ts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
+1/urw/times/utmb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/time
+s/utmr8a.pfb>
+Output written on pubmed-verification-ryans-copy.pdf (9 pages, 643645 bytes).
 PDF statistics:
- 99 PDF objects out of 1000 (max. 8388607)
+ 101 PDF objects out of 1000 (max. 8388607)
  60 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
