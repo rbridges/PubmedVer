@@ -538,7 +538,7 @@ of the puerperium, not elsewhere classified'  &  (`other unspecified complicatio
 
 Each phenotypic item is assigned a ranked list, based on the relevance score, of representative n--grams.
 Table \ref{tab:pheno-n-gram}~shows four examples of the original phenotypic item and the ranked list with the eight highest ranked n-grams and their associated relevance scores.
-Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced many false positives. Using six of the top ranked n-grams gave a tolerable number of false positives. Thus, we represent each phenotypic item with its top 6 relevant n-grams.
+Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced many false positives. Using six of the top ranked n-grams gave a tolerable number of false positives. Thus, we represent each phenotypic item with its top six relevant n-grams.
 In addition to restricting each representation to six n-grams, we pared down the list of aliases even more by ordering the set of all n--grams by their sentence frequency in PubMed, as well as their interaction frequency with other phenotypes, and removing the most frequent 5\% from the sentence frequency and interaction frequency lists.
 Table \ref{tab:uninformative-n-gram} lists the removed features and the items that are typically uninformative or generic.
 More work on consensus filtration, however, is merited.
@@ -591,7 +591,8 @@ For every co-occurrence, all possible subsets of co-occurring phenotypes were al
 For example, when A, B, C, and D co-occurred in a sentence, a co-occurrence for (A,B,C), (B,C,D), (A,B), (A,C), and so forth, were counted.
 In this way, the lifts for any combination in the power set of all phenotypes that co-occurred were counted.
 This allows for convenient lookup of any co-occurrence of interest.
-We also introduce a term, "phenotype cardinality", for convenience, to denote the number of items in a co-occurrence. For example, (A,B,C) would have phenotype cardinality 3.
+We also introduce a term, "phenotype cardinality", for convenience, to denote the number of items in a co-occurrence. 
+For example, (A,B,C) would have phenotype cardinality 3.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes is realized in practice.
 
 The lift metric normalizes co--occurrence probability by the probability of all phenotypes co-occurring assuming they are probabilistically independent.
@@ -613,12 +614,15 @@ In fact, lift appears to be almost perfectly exponential as a function of the nu
 Due to this dependence on the number of items, the lift of each co-occurrence is normalized according to the number of items it contains.
 Co--occurrences are first placed into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership).
 For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality".
-Table \ref {tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of six and a lift of 17.
+Table \ref{tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of 6 and a lift of 17. 
 Then, the mean, median and standard deviation of the lifts for each of the phenotype cardinality groups was calculated.
 We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}).
 
 For this reason, each lift was centered around the median of its phenotype cardinality group and then divided by the standard deviation.
-Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than 0 than the below median lifts are below. This fact makes it so that a lift threshold is likely to be closer on average to the lift of not significant groups than to significant groups.%\jette{As a concluding sentence can you describe what impact this has on deciding which phenotypes are clinically significant and which ones aren't?}
+Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than 0 than the below median lifts are below. 
+This fact makes it so that a lift threshold is likely to be closer on average to the lift of not significant groups than to significant groups.
+Figure \ref{fig:lift-process-cartoon} demonstrates the process of extracting the synonyms for the phenotypic terms, calculating the average standard deviations that a set of phenotypic terms is above the median, and then shows the overall average.
+While the middle column only contains a subset of the phenotypic synonyms, the last column contains all the combinations of phenotypic terms that have non-zero standard deviations (i.e., the co-occurrence is non-zero).
 %Finally, lifts were normalized by the median and standard deviation of the lifts in a phenotype cardinality group.
 
 
