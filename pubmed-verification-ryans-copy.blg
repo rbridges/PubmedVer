@@ -3,52 +3,51 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: pubmed-verification-ryans-copy.aux
 The style file: abbrv.bst
 Database file #1: PubMed.bib
-Illegal end of database file---line 304 of file PubMed.bib
+Illegal end of database file---line 317 of file PubMed.bib
  : 
  : 
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-Warning--to sort, need author or key in phekb:t2d
 Warning--empty journal in Collaboratory:MR-x2zyZ
 You've used 22 entries,
             2118 wiz_defined-function locations,
-            638 strings with 8506 characters,
-and the built_in function-call counts, 9157 in all, are:
-= -- 905
-> -- 487
+            643 strings with 9054 characters,
+and the built_in function-call counts, 9851 in all, are:
+= -- 964
+> -- 579
 < -- 10
-+ -- 194
-- -- 170
-* -- 695
-:= -- 1464
-add.period$ -- 68
++ -- 230
+- -- 206
+* -- 783
+:= -- 1604
+add.period$ -- 70
 call.type$ -- 22
-change.case$ -- 150
+change.case$ -- 169
 chr.to.int$ -- 0
-cite$ -- 24
-duplicate$ -- 329
-empty$ -- 652
-format.name$ -- 170
-if$ -- 1920
+cite$ -- 23
+duplicate$ -- 333
+empty$ -- 656
+format.name$ -- 206
+if$ -- 2035
 int.to.chr$ -- 0
 int.to.str$ -- 22
-missing$ -- 21
-newline$ -- 111
-num.names$ -- 42
-pop$ -- 154
+missing$ -- 22
+newline$ -- 113
+num.names$ -- 44
+pop$ -- 165
 preamble$ -- 1
-purify$ -- 129
+purify$ -- 147
 quote$ -- 0
-skip$ -- 258
+skip$ -- 253
 stack$ -- 0
-substring$ -- 609
+substring$ -- 634
 swap$ -- 102
 text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 88
-warning$ -- 2
-while$ -- 84
+warning$ -- 1
+while$ -- 88
 width$ -- 24
-write$ -- 240
+write$ -- 247
 (There was 1 error message)

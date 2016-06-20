@@ -1,8 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{phekb:t2d}
-
-
 \bibitem{boland2015birth}
 M.~R. Boland, Z.~Shahn, D.~Madigan, G.~Hripcsak, and N.~P. Tatonetti.
 \newblock Birth month affects lifetime disease risk: a phenome-wide method.
@@ -39,6 +36,16 @@ M.~Frisch, B.~Klocke, M.~Haltmeier, and K.~Frech.
 \newblock Litinspector: literature and signal transduction pathway mining in
   pubmed abstracts.
 \newblock {\em Nucleic acids research}, 37(suppl 2):W135--W140, 2009.
+
+\bibitem{kho_use_2012}
+M.~G. Hayes, L.~Rasmussen-Torvik, J.~A. Pacheco, W.~K. Thompson, L.~L.
+  Armstrong, J.~C. Denny, P.~L. Peissig, A.~W. Miller, W.-Q. Wei, S.~J.
+  Bielinski, C.~G. Chute, C.~L. Leibson, D.~R. Crosslin, C.~S. Carlson, K.~M.
+  Newton, W.~A. Wolf, R.~L. Chisholm, and W.~L. Lowe.
+\newblock {Use of diverse electronic medical record systems to identify genetic
+  risk for type 2 diabetes within a genome-wide association study}.
+\newblock {\em Journal of the American Medical Informatics Association},
+  19(2):212--218, Mar. 2012.
 
 \bibitem{Ho:2014jc}
 J.~C. Ho, J.~Ghosh, S.~R. Steinhubl, W.~F. Stewart, J.~C. Denny, B.~A. Malin,
