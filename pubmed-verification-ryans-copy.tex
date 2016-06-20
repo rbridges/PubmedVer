@@ -214,14 +214,14 @@ We are able to show the method separates randomly generated groups of phenotypes
 Computational phenotyping is the practice of mapping the raw information contained in Electronic Health Records (EHRs) into sets of clinically relevant features, or phenotypes.
 Clinicians can use the EHR-based phenotypes to identify patients with specific characteristics or conditions of interest.
 Phenotypes also enable cohort identification to target patients for screening tests and interventions, support surveillance of infectious diseases, and aid in the conduct of pragmatic clinical trials and comparative effectiveness research \cite{Collaboratory:MR-x2zyZ}.
-An example is the severe early childhood obesity phenotype (shown in Figure \ref{fig:obesity-pheno}) which identifies children with increased risk of adult obesity and a potential lifetime of complications \cite{phekb:obesity}.
-The flowchart depicts a series of characteristics that must be present in a patient's EHR for that patient to be identified as an early childhood obesity case patient.
+An example is the type 2 diabetes mellitus phenotype (shown in Figure \ref{fig:t2d-pheno}) \cite{phekb:t2d}.
+The flowchart depicts a series of characteristics that must be present in a patient's EHR for that patient to be identified as a type 2 diabetes case patient.
 
 \begin{figure} [t]
 \centering
-\includegraphics[width=\linewidth]{diabetes_phenotype.png}
-\caption{Severe early childhood obesity phenotype from the Phenotype Knowledgebase \cite{phekb:obesity}, Source: \protect\url{https://phekb.org/sites/phenotype/files/obesity_algorithm_final.pdf}}
-\label{fig:obesity-pheno}
+\includegraphics[width=\linewidth]{t2d-pheno.png}
+\caption{Type 2 diabetes phenotype from the Phenotype Knowledgebase \cite{phekb:t2d}, Source: \protect\url{https://phekb.org/phenotype/type-2-diabetes-mellitus}}
+\label{fig:t2d-pheno}
 \end{figure}
 
 Constructing phenotypes can be a manual, iterative, and labor-intensive process requiring domain expertise \cite{carroll2011naive,chen2013applying,hripcsak2013next}. 
@@ -267,7 +267,7 @@ Thus, there is a need to develop an automated, data--driven process to serve as 
 %As data driven clinical research is used more in decisions for business and medicine, consistent phenotype verification will become increasingly important.
 In this paper, we present an automated framework that can provide third-party verifcation to facilitate and improve the annotation process and accuracy.
 %In this paper, we present a framework that automates the process of annotating candidate phenotypes, and has the potential to facilitate the annotation process and improve annotation accuracy.
-Our method records co--occurrences of phenotypic terms in PubMed \footnote{\url{http://www.ncbi.nlm.nih.gov/PubMed}}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
+Our method records co--occurrences of phenotypic terms in PubMed\footnote{\url{http://www.ncbi.nlm.nih.gov/PubMed}}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
 From this data, we use lift, a metric that summarizes if two or more items co--occur more often than average while accounting for the commonality of the item, to determine clinical relevance.
 %From co-occurrence data in PubMed, we calculate lift of phenotypes (lift is a metric summarizing if two or more items co-occur more often than on average, taking into account if an item is more common than another).
 %High lift between two or more phenotypic items suggests they are clinically related. 
@@ -299,7 +299,7 @@ We demonstrate the method is agnostic to the algorithm that generated the phenot
 
 \section{Related Work}
 Many researchers have used PubMed to explore and discover issues in biology, medicine, and health informatics.
-Multiple software packages like LitInspector \cite{frisch2009litinspector} and PubMed.mineR as well as python packages like Pymedtermino \footnote{\url{http://pythonhosted.org/PyMedTermino/}} and Biopython\footnote{\url{http://biopython.org/}} have been developed to help researchers extract and visualize PubMed.
+Multiple software packages like LitInspector \cite{frisch2009litinspector} and PubMed.mineR as well as python packages like Pymedtermino\footnote{\url{http://pythonhosted.org/PyMedTermino/}} and Biopython\footnote{\url{http://biopython.org/}} have been developed to help researchers extract and visualize PubMed.
 Jensen et al. provide a thorough overview of how PubMed can be harnessed for information extraction and entity recognition \cite{jensen2006literature}.
 Amongst the two methods they discuss for information extraction, natural language processing and co--occurrence analysis, co--occurrence is more prevalent due to its straightforward implementation and the intuitive interpretation of the results.
 %Among the two methods they discuss for information extraction, natural language processing and co--occurrence analysis, we focus on co--occurrence because of its straightforward implementation and the intuitive interpretation of the results (i.e., two terms that appear together more frequently are associated).
@@ -589,15 +589,17 @@ This allows for a simple classification of a phenotype as ``clinically significa
 
 For every co-occurrence, all possible subsets of co-occurring phenotypes were also counted.
 For example, when A, B, C, and D co-occurred in a sentence, a co-occurrence for (A,B,C), (B,C,D), (A,B), (A,C), and so forth, were counted.
-In this way, the lifts for any combination in the power set of all phenotypes that co-occurred were counted. This allows for convenient lookup of any co-occurrence of interest. We also introduce a term, "phenotype cardinality", for convenience, to denote the number of items in a co-occurrence. For example, (A,B,C) would have phenotype cardinality 3.
+In this way, the lifts for any combination in the power set of all phenotypes that co-occurred were counted.
+This allows for convenient lookup of any co-occurrence of interest.
+We also introduce a term, "phenotype cardinality", for convenience, to denote the number of items in a co-occurrence. For example, (A,B,C) would have phenotype cardinality 3.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes is realized in practice.
 
 The lift metric normalizes co--occurrence probability by the probability of all phenotypes co-occurring assuming they are probabilistically independent.
 This means that any lift greater than 1 indicates statistical ``significance".
 However, since these co-occurrences are subject to grammatical rules, etc., lifts for co-occurrences are nearly always greater than 1.
 As we are interested in filtering out all but clinical significance (ignoring significance introduced by grammar and language convention), we randomly generated phenotypes from a set of phenotypic items, and measured the lift significance of these ``phenotypes" to establish the level of lift significance introduced by the possible grammatical and language artifacts.
-
-We found that, across all phenotypes (including the randomly generated ones), lift was strongly positively dependent on the number of items included in the co-occurrence. In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}.
+We found that, across all phenotypes (including the randomly generated ones), lift was strongly positively dependent on the number of items included in the co-occurrence.
+In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}.
 
 
 \begin{figure} [t]
@@ -607,8 +609,9 @@ We found that, across all phenotypes (including the randomly generated ones), li
 \label{fig:log-lift}
 \end{figure}
 
-Due to this dependence on the number of items, the lift of each co-occurrence is normalized according to the number of items it contains (phenotype cardinality).
+Due to this dependence on the number of items, the lift of each co-occurrence is normalized according to the number of items it contains.
 Co--occurrences are first placed into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership).
+For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality".
 Table \ref {tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of six and a lift of 17.
 Then, the mean, median and standard deviation of the lifts for each of the phenotype cardinality groups was calculated.
 We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}).
@@ -626,7 +629,9 @@ generated phenotypes from a de--identified EHR dataset from Vanderbilt Universit
 For more details about the pre--processing of the data and phenotype generation, please refer to their paper \cite{wang2015rubik}.
 The authors graciously shared the file with 50 computational phenotypes as well as the annotations of the three domain experts.
 For each phenotype, each expert assigned one of the following three choices: 1) yes - the phenotype is clinically meaningful, 2) possible - the phenotype is possibly meaningful, and 3) not -- the phenotype is not clinically meaningful.
-Our dataset contains approximately 14\% clinically meaningful, 78\% possibly significant and 8\% not clinically meaningful.
+The second set of candidate phenotypes were generated by Marble \cite{Ho:2014da} using the EHR data of a random subset of 10,000 patients from the \emph{ Centers for Medicare and Medicaid Services (CMS) Linkable 2008-2010 Medicare Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)}, a publicly available dataset with claim records that span 3 years.\footnote{For more information see \url{https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html}}
+We combined the 30 Rubik-generated candidate phenotypes with the 50 Marble-generated candidate phenotypes for a total of 80 candidate phenotypes.
+Of these 80 phenotypes,  the annotators found that approximately 14\% are clinically meaningful, 78\% are possibly significant and 8\% are not clinically meaningful.
 
 %\joyce{Describe the dataset you're using and how you came up with significant and random groups}
 %\jette{probably describe the phenotype dataset before describing the Empirical study? Maybe lead with the Dataset description and put the following paragraphs in the result subsection }
