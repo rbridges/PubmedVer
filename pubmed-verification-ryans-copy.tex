@@ -606,7 +606,7 @@ In fact, lift appears to be almost perfectly exponential as a function of the nu
 \centering
 \includegraphics[width=\linewidth]{lift-process-cartoon.png}
 \caption{Example of lift calculation process for a phenotype that was found to be significant (i.e., above the threshold of 0.0284}
-\label{fig:lift-process-cartoonl}
+\label{fig:lift-process-cartoon}
 \end{figure*}
 
 
@@ -734,7 +734,7 @@ For example, if an annotator was not sure about the significance, he or she coul
 
 Figure \ref{fig:curatedPhenos} shows the normalized lift average of the randomly generated and curated phenotypes, the items of which, again, are represented by 6 N-grams. Similarly, by choosing the optimal threshold, we are able to achieve 100\% true negative classification, and 80\% true positive classification, or an F1 score of 0.89.
 
-We note that while lift thresholding classifies phenotypes with relative success in both high-throughput and curated phenotypes, the method does not provide a universal threshold that works well for both. The threshold separating the random and curated phenotypes, 0.014, would be suboptimal for the high--throughput phenotypes. We can infer that phenotypes from different sources need to be grouped so that ideal thresholds can be generated for each source of phenotypes. We also note that many phenotypes are very close to the optimal threshold. This suggests that further work is needed to improve the predictive value of lift thresholding.
+We note that while lift thresholding classifies phenotypes with relative success in both high-throughput and curated phenotypes, the method does not provide a universal threshold guaranteed for all phenotypes. In addition, the majority of phenotypes are very close to the optimal threshold. This suggests that further work is needed to improve the predictive value of lift thresholding.
 
 \section{Conclusion}
 We have presented an automated method for verifying the significance of phenotype groupings using co-occurrence of diagnoses/medications within the phenotype in a corpus of medical literature. 
