@@ -283,29 +283,34 @@ We demonstrate the method is agnostic to the algorithm that generated the phenot
 %\end{table}
 
 \section{Related Work}
-Many researchers have used PubMed to explore and discover issues in biology, medicine, and health informatics.
-Multiple software packages like LitInspector \cite{frisch2009litinspector} and PubMed.mineR as well as python packages like Pymedtermino\footnote{\url{http://pythonhosted.org/PyMedTermino/}} and Biopython\footnote{\url{http://biopython.org/}} have been developed to help researchers extract and visualize PubMed.
+While many researchers have used PubMed to explore and discover issues in biology, medicine, and health informatics, few have used PubMeb as a validation tool.
+One such study by Boland et al. mined EHR records for patients who had disease-specific codes and then compared the association between birth month and the disease to a group of control patients who did not have the disease codes present in their EHRs \cite{boland2015birth}. 
+They validated their results against papers queried from PubMed that had disease and birth month as topics.
+Neveol  et al. did not use Pubmed as a validation tool but they did use it as a tool to generate candidate annotations for PubMed queries and then measured the inter-annotator agreement as well as annotation time between sets of queries with and without the candidate annotations \cite{neveol2011semi}. 
+While they were annotating PubMed in order to understand PubMed users' needs, their work shows that annotating tools can not only speed up annotating time, but increase inter-annotator agreement.
+However, annotating before annotators can examine the text can have the effect of biasing annotators, so it should be used carefully.
+
+More commonly, researchers PubMed as an exploratory tool.
+%Multiple software packages like LitInspector \cite{frisch2009litinspector} and PubMed.mineR as well as python packages like Pymedtermino\footnote{\url{http://pythonhosted.org/PyMedTermino/}} and Biopython\footnote{\url{http://biopython.org/}} have been developed to help researchers extract and visualize PubMed.
 Jensen et al. provide a thorough overview of how PubMed can be harnessed for information extraction and entity recognition \cite{jensen2006literature}.
 Amongst the two methods they discuss for information extraction, natural language processing and co--occurrence analysis, co--occurrence is more prevalent due to its straightforward implementation and the intuitive interpretation of the results.
 %Among the two methods they discuss for information extraction, natural language processing and co--occurrence analysis, we focus on co--occurrence because of its straightforward implementation and the intuitive interpretation of the results (i.e., two terms that appear together more frequently are associated).
-While co--occurrence analysis does not give information about the type of relationship or any causal information, work done on bias towards publishing positive results allows for the assumption that when two phrases occur together the relationship exists (\cite{dickersin1990existence,easterbrook1991publication,stern1997publication}).
-Raijpal et al. perform frequency analyses on PubMed abstracts in order to 1) predict emerging trends in genes and the diseases to which they are related and 2) explore the possible link between two diseases, psoriasis and obesity \cite{rajpal2014mining}. 
-This type of exploration can be thought of as phenotype discovery.
+While co--occurrence analysis does not give information about the type of relationship or any causal information, work done on bias towards publishing positive results allows for the assumption that when two phrases occur together the relationship exists \cite{dickersin1990existence,easterbrook1991publication,stern1997publication}.
+Researchers have applied co-occurrence strategies to generate phenotypes. 
+Some have used Pubmed to study links between diseases \cite{rajpal2014mining}, which can be thought of as phenotype discovery, to explore relationships between phenotypes and genotypes \cite{pletscher2015diseases}.
+Our work focuses on using co-occurrence analysis of Pubmed as a validation tool for annotations.
 
-Co--occurrence analysis of PubMed has also be used to explore relationships between phenotypes and genotypes.
-Pletscher-Frankild et al. perform co--occurrence analysis on the abstracts along with genetic data and evidence from other studies to discover disease-gene associations \cite{pletscher2015diseases}.
-They apply a scheme that takes into account co--occurrence within an abstract and within a sentence, and then convert the co--occurrence scores into Z-scores, which corrects for abstracts of different lengths.
-Adding another layer of complexity to the co-occurrence, \cite{von2015data} queried MEDLINE for a set of diseases, to construct disease by genes vectors where a vector element is zero or replaced by the number of times the disease and gene co--occur in articles. 
-This approach, called second order co--occurrence, is meant to model the idea even though diseases may no occur together frequently, they belong to a cluster of diseases that co--occur frequently overall, which they ascertain through thresholding the cosine similarity of the disease vectors.
+%Raijpal et al. perform frequency analyses on PubMed abstracts in order to 1) predict emerging trends in genes and the diseases to which they are related and 2) explore the possible link between two diseases, psoriasis and obesity \cite{rajpal2014mining}. 
+%This type of exploration can be thought of as phenotype discovery.
 
-There has been limited research into using PubMed as a validation tool.
-For example, Boland et al. mined EHR records for patients who had disease-specific codes and then compared the association between birth month and the disease to a group of control patients who did not have the disease codes present in their EHRs \cite{boland2015birth}. 
-They validated their results against papers queried from PubMed that had disease and birth month as topics.
+%Co--occurrence analysis of PubMed has also been used to explore relationships between phenotypes and genotypes.
+%Pletscher-Frankild et al. perform co--occurrence analysis on the abstracts along with genetic data and evidence from other studies to discover disease-gene associations \cite{pletscher2015diseases}.
+%They apply a scheme that takes into account co--occurrence within an abstract and within a sentence, and then convert the co--occurrence scores into Z-scores, which corrects for abstracts of different lengths.
+%Adding another layer of complexity to the co-occurrence, \cite{von2015data} queried MEDLINE for a set of diseases, to construct disease by genes vectors where a vector element is zero or replaced by the number of times the disease and gene co--occur in articles. 
+%This approach, called second order co--occurrence, is meant to model the idea even though diseases may no occur together frequently, they belong to a cluster of diseases that co--occur frequently overall, which they ascertain through thresholding the cosine similarity of the disease vectors.
+%
+%PubMed has also been used as a resource for generating annotations.
 
-PubMed has also been used as a resource for generating annotations.
-Neveol  et al. used pre-existing tools to generate candidate annotations for PubMed queries and then measured the inter-annotator agreement as well as annotation time between sets of queries with and without the candidate annotations \cite{neveol2011semi}. 
-While they were annotating PubMed in order to understand PubMed users' needs, their work shows that annotating tools can not only speed up annotating time, but increase inter-annotator agreement.
-However, annotating before annotators can examine the text can have the effect of biasing annotators, so it should be used carefully.
 %Our work uses co-occurence methods to validate results generated through high-throughput methods.
 %While we apply co-occurence to perform validation of high-throughput phenotyping methods, this approach could be applied to other types of experiment results.
 
@@ -344,7 +349,7 @@ Figures \ref{fig:feature-extract} and \ref{fig:sig-calc} show the process for a 
 
 \begin{figure*} [t]
 \centering
-\includegraphics[width=\linewidth]{Flowchart_ToLift.png}
+\includegraphics[scale=.6]{Flowchart_ToLift.png}
 \caption{Significance calculation for phenotypic items}
 \label{fig:sig-calc}
 \end{figure*}
@@ -458,7 +463,8 @@ Original representation &  Ranked list of n--grams \\
 									& (`antihypertensive drug disorder', 0.065) \\
 									& (`antihypertensive agent disorder', 0.065) \\
 \hline
-%`Disorders of lacrimal system' & (`lacrimal apparatus diseases', 0.636)\\
+`Disorders of lacrimal system' & (`lacrimal apparatus diseases', 0.636)\\
+& \vdots \\
 %						& (`disorders lacrimal system', 0.603)\\
 %						& (`disorders lacrimal', 0.551)\\
 %						& (`lacrimal system', 0.51)\\
