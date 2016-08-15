@@ -317,7 +317,7 @@ Our work focuses on using co-occurrence analysis of Pubmed as a validation tool 
 \begin{figure*} [t]
 \centering
 \includegraphics[width=\linewidth]{Flowchart_Features_revised.png}
-\caption{Feature extraction for phenotypic items \jette{It may be a little confusing to readers that the some terms in the middle column do not appear in the right column. It may be better to scramble the order of the right column and put that in the middle column}}
+\caption{Feature extraction for Phenotypic Items}
 \label{fig:feature-extract}
 \end{figure*}
 
@@ -368,14 +368,12 @@ Thus, the appropriate terms must be used so that heart failure as a concept may 
 To produce a representation that has high recall and high precision, we first generate a large set of possible representative n-grams, and then filter all the candidate n-grams down to the most relevant n-grams (the filtration process is discussed in the next section).
 %Often times, the phenotype elements themselves have been aggregated using an existing hierarchy (e.g., PheWAS groupings for ICD-9 diagnosis codes, ATC codes for medications, etc.). 
 
-
 A na\"{\i}ve approach is to use the item as it appears rather than to perform the candidate generation and filtration process.
 However, this can yield low recall as the text is often too specific or not phrased naturally. 
-For example, note the phenotypic item ``unspecified chest pain" in the phenotype in Figure \ref{fig:feature-extract}. 
-The adjective ``unspecified" reduces the chance that the more appropriate bi-gram ``chest pain" will be discovered. 
-While omission of ``unspecified" is a clear step to improve recall without sacrificing precision (``unspecified" is in fact omitted in pre-processing), not every phenotypic item has such a clear solution. \jette{can you show an example where this does not have a clear solution?}
+For example, note the phenotypic item ``calcium channel blocking agents" in the phenotype in Figure \ref{fig:feature-extract}. The phrase communicates the idea to a person reading, but it might be more appropriate to shorten to ``calcium channel blockers" for detection in text, or even ``hypertension medications" for some purposes. 
+
 Likewise, using a collection of individual words (unigrams) to represent phenotypes yields high recall, but low precision, as it is difficult to filter out enough of the words that lack specificity, but are important in some cases (e.g. ``disease" or ``results").
-``Unspecified", ``chest" and ``pain" will obviously find all occurrences of ``chest pain," but will also capture mentions having little to do with ``chest pain" resulting in low precision.
+``calcium", ``channel", ``blocking", and ``agents" will obviously find all occurrences of ``calcium channel blocking agents," but will also capture mentions having little to do with the subject, resulting in low precision.
 
 %\begin{table}
 %{\small
@@ -517,7 +515,6 @@ Table \ref{tab:pheno-n-gram}~shows one examples of the original phenotypic item 
 For example, the first synonym `lacrimal apparatus diseases' of the second item `Disorders of lacrimal system' has a relevance of .636, which means  these phrases appeared together in 63.6\% of Pubmed searches for each phrase separately.
 Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced a suboptimal number of false positives (refer to Figure \ref{fig:classificationVarNG}. 
 In Section~\ref{empirical} (Figure~\ref{fig:classificationVarNG}), we show using six of the top ranked n-grams gives a tolerable number of false positives.
-\jette{Note from Dr. Ghosh: with respect to what ground truth? How do we know what is a positive and what is a negative?}
 In addition to restricting each representation to six n-grams, we pared down the list of aliases even more by ordering the set of all n--grams by their sentence frequency in PubMed, as well as their interaction frequency with other phenotypes, and removing the most frequent 5\% from the sentence frequency and interaction frequency lists.
 %Table \ref{tab:uninformative-n-gram} lists the removed features and the items that are typically uninformative or generic.
 More work on consensus filtration, however, is merited, but these choices reflect the need to keep the framework as computationally efficient as possible.
@@ -557,7 +554,7 @@ For all articles in the subset, any sentence containing one or more of the n-gra
 Each sentence was minimally processed, only regularizing capitalization and encoding (utf-8), taking out words included in NLTK's English stopword list, using a conservative regular expression to remove references (e.g. Smith, et al.), and removing special characters like quotes and parenthesis. 
 The form/tense and spelling of words were left as written to be consistent with the n-grams derived from the ontology related phrases.
 
-Any occurrence of an n-gram that is a part of the set of 3 to 6 n-grams (6 is the target, some phenotypic items have 3, 4 or 5 based upon filtration criteria) representing a phenotype counted as an appearance for its phenotypic item.\jette{Why is it 3 to 6 n-grams here? I thought it was 6.}
+Any occurrence of an n-gram that is a part of the set of 3 to 6 n-grams (6 is the target, some phenotypic items have 3, 4 or 5 based upon filtration criteria) representing a phenotype counted as an appearance for its phenotypic item.
 This simplifying assumption eliminated the need to weigh n-grams by their ``relevance."	
 The assumption also ignores if a sentence contains more than one n-gram for an item.
 Using this measure of co-occurrence, the lift of every co-occurrence of phenotypic items was calculated. Recall that given A, B, and C in a sentence:
@@ -580,8 +577,9 @@ The lift metric divides the probability of co-occurrence by the product of each 
 If the probability of co-occurrence is higher than the rate of random co-occurrence (assuming independence), then the lift will be greater than 1 and indicates ``statistical significance."
 However, since these co-occurrences are subject to grammatical rules, etc., lifts for co-occurrences are nearly always greater than 1.
 As we are interested in filtering out all but clinical significance (ignoring significance introduced by grammar and language convention), we randomly generated phenotypes from a set of phenotypic items, and measured the lift significance of these ``phenotypes" to establish the level of lift significance introduced by the possible grammatical and language artifacts.
-We found that, across all co-occurrences among phenotypic items (this includes those from multiple phenotypes), lift was strongly positively dependent on the number of items included in the co-occurrence.
-In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}.
+
+We began analaysis by placing phenotypic item co-occurrences into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership). For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality". We found that, across all co-occurrences among phenotypic items (this includes those from multiple phenotypes), lift was strongly positively dependent on the number of items included in the co-occurrence.
+In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}. Thus, we divide each lift by the median of the lifts of that cardinality so that higher cardinality co-occurrences don't dominate the phenotype mean. 
 
 \begin{figure*} [t]
 \centering
@@ -590,17 +588,11 @@ In fact, lift appears to be almost perfectly exponential as a function of the nu
 \label{fig:lift-process-cartoon}
 \end{figure*}
 
-Co--occurrences are first placed into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership).
-For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality".
-%Table \ref{tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of 6 and a lift of 17. 
-Then, the mean, median and standard deviation of the lifts for each of the phenotype cardinality groups was calculated.
-We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}).
-Due to this dependence on the number of items, we divide each lift by the median of the lifts of that cardinality. 
-\jette{I changed this paragraph up a bit and commented out the first sentence of the next paragraph, and I'm not sure I made this clearer, but it might be good to use a term other than ``normalization" here.}
 
-%For this reason, each lift was centered around the median of its phenotype cardinality group and then divided by the standard deviation.
-Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than 0 than the below median lifts are below. 
-This fact makes it so that a lift threshold is likely to be closer on average to the lift of not significant groups than to significant groups.
+%Table \ref{tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of 6 and a lift of 17. 
+
+We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}). Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than 0 than the below median lifts are below. 
+This fact makes it so that a lift threshold is likely to be closer on average to the lift of not significant phenotypes than to significant phenotypes.
 Figure \ref{fig:lift-process-cartoon} demonstrates the process of extracting the synonyms for the phenotypic terms, calculating the average standard deviations that a set of phenotypic terms is above the median, and then shows the overall average.
 While the middle column only contains a subset of the phenotypic item synonym set, the last column contains all the combinations of phenotypic terms that have non-zero standard deviations (i.e., the co-occurrence is non-zero).
 A phenotype is labeled clinically relevant if the average standard deviation of the median is above a threshold.
@@ -648,7 +640,7 @@ In addition to the high--throughput generated phenotypes, we used randomly gener
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth]{logLiftsAcrossPhenoCard_MMM_relabeled.png}
-\caption{Log lifts versus Phenotype Cardinality from all combinations of Phenotypic Items from any Phenotype \jette{It would be great to go through this figure together. Are you including the lifts of 0 in the average calculation if two phenotypic items did not occur together? I'm also confused when the phenotypic item sets would get so large--are there really phenotypes with 18 terms in them?}}% \jette{Can you change the x axis to be ``Phenotype Cardinality"?}}
+\caption{Log Lifts versus Phenotype Cardinality from all Combinations of Phenotypic Items from any Phenotype}
 \label{fig:log-lift}
 \end{figure}
 
@@ -673,14 +665,14 @@ To determine the optimal number of n-grams to represent each phenotypic item, we
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth]{normalizedLiftAvg_without0s.png}
-\caption{Normalized Average Lift of Marble/Rubik Phenotypes \jette{This is pretty hard to see, could you change the dots to be different shapes? For example, x s, dots, and crosses perhaps?}}
+\caption{Normalized Average Lift of Marble/Rubik Phenotypes}
 \label{fig:kho-josh-all}
 \end{figure}
 
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth] {classificationWithVariableNG.png}
-\caption{Classification Scores versus Maximum Number of N-grams Representing Phenotypic items \jette{1) could you change the color of the yellow line to be something darker like red? 2) The current x-axis is a little misleading. It seems like the numbers represent the length of the n-grams rather than the size of the n-gram sets. The x-axis should probably be something like ``Size of Ranked Sßynonym Set"}}
+\caption{Classification Scores versus Size of Representative N-Gram Set}
 \label{fig:classificationVarNG}
 \end{figure}
 
@@ -688,7 +680,7 @@ To determine the optimal number of n-grams to represent each phenotypic item, we
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth] {normalizedLiftAvg_boxplot.png}
-\caption{Normalized Average Lift of Curated Phenotypes \jette{Two things: 1) Would it be possible to make this a boxplot of clinically significant groups vs. randomly generated groups? That way we could see the distribution of the standard deviations. 2)  Also, could you change ``clinically significant" to ``Curated Groups?" }}
+\caption{Normalized Average Lift of Curated Phenotypes}
 \label{fig:curatedPhenos}
 \end{figure}
 
