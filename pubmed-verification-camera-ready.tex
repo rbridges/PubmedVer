@@ -176,9 +176,9 @@ Jette Henderson\\
 In the realm of data driven clinical research, medical concepts, or phenotypes, are used to serve as indicators for patient clusters of interest. Often, studies will use groups of algorithmically generated phenotypes (feature groups) to predict the occurrence of heart disease, diabetes, and other conditions. 
 When these groups are algorithmically generated, the most common method of verification is manual human annotation, which can be time consuming and sometimes inconsistent.
 In this paper, we propose a supervision-free method of verification that uses co-occurrence in PubMed articles to determine clinical significance.
+We demonstrate the efficacy of the method by 1) applying it to phenotypes generated through automatic machine learning methods and 2) showing it separates randomly generated groups of phenotypes from curated groups of known, clinical phenotypes. 
+%Further, this method has the potential to explain the underlying causes for phenotypes and to identify subsets of phenotype groups that are better predictors for a particular patient cluster.
 
-We are able to show the method separates randomly generated groups of phenotypes from curated groups to demonstrate known clinical narratives. 
-Further, this method has the potential to explain the underlying causes for phenotypes and to identify subsets of phenotype groups that are better predictors for a particular patient cluster.
 \end{abstract}
 
 
@@ -297,8 +297,8 @@ Amongst the two methods they discuss for information extraction, natural languag
 %Among the two methods they discuss for information extraction, natural language processing and co--occurrence analysis, we focus on co--occurrence because of its straightforward implementation and the intuitive interpretation of the results (i.e., two terms that appear together more frequently are associated).
 While co--occurrence analysis does not give information about the type of relationship or any causal information, work done on bias towards publishing positive results allows for the assumption that when two phrases occur together the relationship exists \cite{dickersin1990existence,easterbrook1991publication,stern1997publication}.
 Researchers have applied co-occurrence strategies to generate phenotypes. 
-Some have used Pubmed to study links between diseases \cite{rajpal2014mining}, which can be thought of as phenotype discovery, to explore relationships between phenotypes and genotypes \cite{pletscher2015diseases}.
-Our work focuses on using co-occurrence analysis of Pubmed as a validation tool for annotations.
+Some have used Pubmed to study links between diseases \cite{rajpal2014mining}, which can be thought of as phenotype discovery, and to explore relationships between phenotypes and genotypes \cite{pletscher2015diseases}.
+Having generated phenotypes through machine learning techniques, our work focuses on using co-occurrence analysis of Pubmed as a validation tool for annotations.
 
 %Raijpal et al. perform frequency analyses on PubMed abstracts in order to 1) predict emerging trends in genes and the diseases to which they are related and 2) explore the possible link between two diseases, psoriasis and obesity \cite{rajpal2014mining}. 
 %This type of exploration can be thought of as phenotype discovery.
@@ -370,10 +370,11 @@ To produce a representation that has high recall and high precision, we first ge
 
 A na\"{\i}ve approach is to use the item as it appears rather than to perform the candidate generation and filtration process.
 However, this can yield low recall as the text is often too specific or not phrased naturally. 
-For example, note the phenotypic item ``calcium channel blocking agents" in the phenotype in Figure \ref{fig:feature-extract}. The phrase communicates the idea to a person reading, but it might be more appropriate to shorten to ``calcium channel blockers" for detection in text, or even ``hypertension medications" for some purposes. 
+For example, note the phenotypic item ``calcium channel blocking agents" in the phenotype in Figure \ref{fig:feature-extract}. 
+When searching through text, it may be more appropriate to shorten the phrase to ``calcium channel blockers" or even alternatively use the phrase  ``hypertension medications." 
 
 Likewise, using a collection of individual words (unigrams) to represent phenotypes yields high recall, but low precision, as it is difficult to filter out enough of the words that lack specificity, but are important in some cases (e.g. ``disease" or ``results").
-``calcium", ``channel", ``blocking", and ``agents" will obviously find all occurrences of ``calcium channel blocking agents," but will also capture mentions having little to do with the subject, resulting in low precision.
+``Calcium", ``channel", ``blocking", and ``agents" will obviously find all occurrences of ``calcium channel blocking agents," but will also capture mentions having little to do with the subject, resulting in low precision.
 
 %\begin{table}
 %{\small
@@ -399,7 +400,7 @@ We supplemented SNOMED-CT with two other common ontologies, ICD--10 and the NCBI
 During implementation, we extracted the SNOMED-CT and ICD--10 ontologies with a python library called Pymedtermino.\footnote{\url{http://pythonhosted.org/PyMedTermino/}}
 Biopython,\footnote{\url{http://biopython.org/}} a tool which also provides an interface to the Entrez tools, provided access to the MeSH terms.
 We queried the Pymedtermino and Entrez APIs to collect aliases from these three ontologies, and then placed the related terms from each ontology into a (potentially large) list of candidate concepts that may represent the phenotypic item.
-After assigning every phenotype a pooled set of related concepts, we removed stopwords, and then extracted the set of all unigrams, bi-grams and tri-grams from the related concepts.
+After assigning every phenotype a pooled set of related concepts, we removed stopwords, and then extracted the set of all unigrams, bi-grams, and tri-grams from the related concepts.
 
 Figure \ref{fig:feature-extract} shows the feature generation process for the phenotypic items ``heart failure" and ``antianginal agents".
 For ``heart failure", our framework generates the related concepts ``congenital heart disease", ``left ventricular structure", ``myocardium", and ``heart valve disorder" as indicated by the middle column of the figure.
@@ -426,8 +427,10 @@ The choice of 250 n-grams allowed sufficient coverage of the related concepts, w
 
 
 \subsection{Selection and Filtration of candidate \\n-grams}
-After extracting all possible n--grams (unigrams, bigrams and/or trigrams) relating to a phenotypic item, our framework determines the n--grams that are most related to the phenotypic item, which we refer to as the selection and filtration process.
-This process orders the n--grams generated from the previous process (e.g., the first and middle column of \ref{fig:feature-extract}) by ``relevance" which provides a tunable knob to find the optimal number of representative n--grams to optimize both precision and recall of the phenotypic item in the articles, which is an concept we will explore in Section~\ref{empirical}.
+After extracting all possible n--grams (unigrams, bigrams, and/or trigrams) relating to a phenotypic item, our framework determines the n--grams that are most related to the phenotypic item, which we refer to as the selection and filtration process.
+This process orders the n--grams generated from the previous process (e.g., the first and middle column of \ref{fig:feature-extract}) by ``relevance." 
+We can then tune the trade-off between precision and recall by adjusting the number of relevant n--grams we use to represent each phenotypic item. 
+We explore the trade-off between precision and recall in Section~\ref{empirical}.
 % from the concepts we order them by ``relevance"
 %This allows us to represent the phenotypic item with n-grams that are the most related to the phenotypic item.
 %It also allows us to find the optimal number of representative n-grams to optimize both precision and recall of the phenotypic item concept in PubMed articles.
@@ -511,9 +514,9 @@ Original representation &  Ranked list of n--grams \\
 
 Each phenotypic item is assigned a ranked list, based on the relevance score, of representative n--grams.
 We refer to the set of top ranked n-grams as the phenotypic item synonym set.
-Table \ref{tab:pheno-n-gram}~shows one examples of the original phenotypic item and the ranked list with the eight highest ranked n-grams and their associated relevance scores.
+Table \ref{tab:pheno-n-gram}~shows one example of the original phenotypic item and the ranked list with the eight highest ranked n-grams and their associated relevance scores.
 For example, the first synonym `lacrimal apparatus diseases' of the second item `Disorders of lacrimal system' has a relevance of .636, which means  these phrases appeared together in 63.6\% of Pubmed searches for each phrase separately.
-Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced a suboptimal number of false positives (refer to Figure \ref{fig:classificationVarNG}. 
+Based on our experimental results, we found selecting fifteen or even ten of the top ranked n--grams produced a suboptimal number of false positives. 
 In Section~\ref{empirical} (Figure~\ref{fig:classificationVarNG}), we show using six of the top ranked n-grams gives a tolerable number of false positives.
 In addition to restricting each representation to six n-grams, we pared down the list of aliases even more by ordering the set of all n--grams by their sentence frequency in PubMed, as well as their interaction frequency with other phenotypes, and removing the most frequent 5\% from the sentence frequency and interaction frequency lists.
 %Table \ref{tab:uninformative-n-gram} lists the removed features and the items that are typically uninformative or generic.
@@ -554,7 +557,7 @@ For all articles in the subset, any sentence containing one or more of the n-gra
 Each sentence was minimally processed, only regularizing capitalization and encoding (utf-8), taking out words included in NLTK's English stopword list, using a conservative regular expression to remove references (e.g. Smith, et al.), and removing special characters like quotes and parenthesis. 
 The form/tense and spelling of words were left as written to be consistent with the n-grams derived from the ontology related phrases.
 
-Any occurrence of an n-gram that is a part of the set of 3 to 6 n-grams (6 is the target, some phenotypic items have 3, 4 or 5 based upon filtration criteria) representing a phenotype counted as an appearance for its phenotypic item.
+Any occurrence of an n-gram that is a part of the set of 3 to 6 n-grams (6 is the target, some phenotypic items have 3, 4, or 5 based upon filtration criteria) representing a phenotype counted as an appearance for its phenotypic item.
 This simplifying assumption eliminated the need to weigh n-grams by their ``relevance."	
 The assumption also ignores if a sentence contains more than one n-gram for an item.
 Using this measure of co-occurrence, the lift of every co-occurrence of phenotypic items was calculated. Recall that given A, B, and C in a sentence:
@@ -565,11 +568,11 @@ This allows for a simple classification of a phenotype as ``clinically significa
 
 For every co-occurrence, all possible subsets of co-occurring phenotypic items within phenotypes were also counted.
 For example, when A, B, C, and D co-occurred in a sentence, a co-occurrence for (A,B,C), (B,C,D), (A,B), (A,C), and so forth, were counted.
-In this way, the lifts for any combination in the power set of all phenotypes that co-occurred were counted.
+In this way, the lifts for any combination in the power set of all phenotypes \jette{phenotypic items?} that co-occurred were counted.
 This allows for convenient lookup of any co-occurrence of interest.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes returns a non-empty search.
 
-We made the assumption that co-occurrences with higher phenotype cardinality should be favored (i.e., the more of the phenotype is represented, the more can be said about the significance of the phenotype as a whole). 
+We made the assumption that co-occurrences with higher phenotype cardinality \jette{I think phenotype cardinality is mentioned before it is defined} should be favored (i.e., the more of the phenotype is represented, the more can be said about the significance of the phenotype as a whole). 
 To serve this preference, we counted co-occurrences with the largest phenotype cardinality first, and then ignored any co-occurrence that was a subset of any larger co-occurrence. This was achieved by simply ordering the combinations in descending cardinality order, and greedily inserting the combination into a set if it was not a subset of an already counted combination. 
 This choice allows co-occurrences of any size to contribute to the average of a phenotype group but favors interactions including more phenotypes of the group (without double counting their subsets) assuming this is a better representation of the significance of the group as a whole.
 
@@ -578,8 +581,11 @@ If the probability of co-occurrence is higher than the rate of random co-occurre
 However, since these co-occurrences are subject to grammatical rules, etc., lifts for co-occurrences are nearly always greater than 1.
 As we are interested in filtering out all but clinical significance (ignoring significance introduced by grammar and language convention), we randomly generated phenotypes from a set of phenotypic items, and measured the lift significance of these ``phenotypes" to establish the level of lift significance introduced by the possible grammatical and language artifacts.
 
-We began analaysis by placing phenotypic item co-occurrences into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership). For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality". We found that, across all co-occurrences among phenotypic items (this includes those from multiple phenotypes), lift was strongly positively dependent on the number of items included in the co-occurrence.
-In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}. Thus, we divide each lift by the median of the lifts of that cardinality so that higher cardinality co-occurrences don't dominate the phenotype mean. 
+We began analysis by placing phenotypic item co-occurrences into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership). 
+For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality". 
+We found that, across all co-occurrences among phenotypic items (this includes those from multiple phenotypes), lift was strongly positively dependent on the number of items included in the co-occurrence.
+In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}. 
+Thus, we divide each lift by the median of the lifts of that cardinality so that higher cardinality co-occurrences do not dominate the phenotype mean. 
 
 \begin{figure*} [t]
 \centering
@@ -591,11 +597,11 @@ In fact, lift appears to be almost perfectly exponential as a function of the nu
 
 %Table \ref{tab:phenoCard} shows an example of a phenotype with the phenotype cardinality of 6 and a lift of 17. 
 
-We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}). Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than 0 than the below median lifts are below. 
+We note that the mean and standard deviation of each of these cardinality groups were skewed high, as the max lifts were significantly further from the median than the below-median lifts (Figure \ref{fig:log-lift}). Since the standard deviation is artificially increased by the largest lifts, the normalized above median lifts are still much greater than zero than the below median lifts are below. 
 This fact makes it so that a lift threshold is likely to be closer on average to the lift of not significant phenotypes than to significant phenotypes.
 Figure \ref{fig:lift-process-cartoon} demonstrates the process of extracting the synonyms for the phenotypic terms, calculating the average standard deviations that a set of phenotypic terms is above the median, and then shows the overall average.
 While the middle column only contains a subset of the phenotypic item synonym set, the last column contains all the combinations of phenotypic terms that have non-zero standard deviations (i.e., the co-occurrence is non-zero).
-A phenotype is labeled clinically relevant if the average standard deviation of the median is above a threshold.
+A phenotype is labeled clinically relevant if the average standard deviation of the median is above a chosen threshold.
 %Finally, lifts were normalized by the median and standard deviation of the lifts in a phenotype cardinality group.
 
 
@@ -659,7 +665,16 @@ In addition to the high--throughput generated phenotypes, we used randomly gener
 %\end{table}
 
 \subsection{Results}
-To determine the optimal number of n-grams to represent each phenotypic item, we simply performed a sweep search across several choices, the results of which are summarized in Figure \ref{fig:classificationVarNG}. The choice of 6 n-grams resulted in classification with the best balance between precision and recall, achieving an F1 score of 0.87 (2 N-grams scored 0.88, but had lower precision).
+To determine the optimal number of n-grams to represent each phenotypic item, we simply performed a sweep search across several choices, the results of which are summarized in Figure \ref{fig:classificationVarNG}.
+Figure \ref{fig:classificationVarNG} shows the precision, recall and F1 score for classifying phenotypes to their ``significant" or ``not significant" annotator labels when characterized by different numbers of n-grams. 
+The choice of 6 n-grams resulted in classification with the best balance between precision and recall, achieving an F1 score of 0.87 (2 N-grams scored 0.88, but had lower precision).
+
+\begin{figure} [t]
+\centering
+\includegraphics[width=\linewidth] {classificationWithVariableNG.png}
+\caption{Classification Scores versus Size of Representative N-Gram Set}
+\label{fig:classificationVarNG}
+\end{figure}
 
 
 \begin{figure} [t]
@@ -667,13 +682,6 @@ To determine the optimal number of n-grams to represent each phenotypic item, we
 \includegraphics[width=\linewidth]{normalizedLiftAvg_without0s.png}
 \caption{Normalized Average Lift of Marble/Rubik Phenotypes}
 \label{fig:kho-josh-all}
-\end{figure}
-
-\begin{figure} [t]
-\centering
-\includegraphics[width=\linewidth] {classificationWithVariableNG.png}
-\caption{Classification Scores versus Size of Representative N-Gram Set}
-\label{fig:classificationVarNG}
 \end{figure}
 
 
@@ -692,15 +700,18 @@ To determine the optimal number of n-grams to represent each phenotypic item, we
 %\label{fig:kho-josh-posneg}
 %\end{figure}
 
-Figure \ref{fig:kho-josh-all} shows the normalized lift average of the phenotypes generated by Marble and Rubik (\cite {Ho:2014jc,Ho:2014da, wang2015rubik}).
-Figure \ref{fig:classificationVarNG} shows the precision, recall and F1 score for classifying phenotypes to their ``significant" or ``not significant" annotator labels when characterized by different numbers of n-grams. 
+Using the above analysis, we then analyzed at the normalized lifts generated by the high-throughput methods. Figure \ref{fig:kho-josh-all} shows the normalized lift average of the phenotypes generated by Marble and Rubik (\cite {Ho:2014jc,Ho:2014da, wang2015rubik}). 
+%Figure \ref{fig:kho-josh-all} shows the normalized lift averages for phenotypes labeled as "significant", "maybe significant" and "not significant". 
+Again, by determining the optimal lift threshold (determined to be 0.028 by exhaustion), we are able to classify ``significant" and ``not significant" phenotypes with an F1 score of 0.87. 
 
-First, we look at the normalized lifts generated by the high-throughput methods. Figure \ref{fig:kho-josh-all} shows the normalized lift averages for phenotypes labeled as "significant", "maybe significant" and "not significant". Again, by determining the optimal lift threshold (determined to be 0.028 by exahustion), we are able to classify "significant" and "not significant" phenotypes with an F1 score of 0.87 (we don't perform any classification on the questionably significant groups).
-
+While we do not perform any classification on the possibly significant groups, but we plan to delve into this into the future.
 Annotators could use this analysis as evidence to give labels the phenotypes that may be significant.
 For example, if an annotator was not sure about the significance, he or she could use the average lift as another piece of information while making the decision.
+However, a more thorough analysis of the value of this and whether or not it would bias an annotator must be studied.
 
-Figure \ref{fig:curatedPhenos} shows the normalized lift average of the randomly generated and curated phenotypes, the items of which, again, are represented by 6 N-grams. Similarly, by choosing the optimal threshold, we are able to achieve 100\% true negative classification, and 80\% true positive classification, or an F1 score of 0.89.
+Figure \ref{fig:curatedPhenos} shows the normalized lift average of the randomly generated and curated phenotypes, the items of which, again, are represented by 6 N-grams. 
+In the majority of cases the normalized lift average of the curated phenotypes is above that of the randomly generated phenotypes. 
+Similarly, by choosing the optimal threshold, we are able to achieve 100\% true negative classification, and 80\% true positive classification, or an F1 score of 0.89.
 
 We note that while lift thresholding classifies phenotypes with relative success in both high-throughput and curated phenotypes, the method does not provide a universal threshold guaranteed for all phenotypes. In addition, the majority of phenotypes are very close to the optimal threshold. This suggests that further work is needed to improve the predictive value of lift thresholding.
 
