@@ -551,7 +551,7 @@ More work on consensus filtration, however, is merited, but these choices reflec
 
 NCBI has a publicly available download of PubMed.
 For computational reasons, we used a randomly selected subset of 25\% of the articles available in PubMed for this analysis. 
-In the future we plan to scale to more articles or select the subset based on when the articles were published.
+In the future we plan to scale to more articles, select the subset based on when the articles were published, and select the subset based upon the journal's impact factor.
 In the random subset, we searched for occurrences of elements of the phenotypic item synonym sets (generated in the last section) for all items within each phenotype.
 For all articles in the subset, any sentence containing one or more of the n-grams from any phenotypic item was noted, and the set of n-grams appearing in the sentence was added to a master list of all co-occurrences. 
 Each sentence was minimally processed, only regularizing capitalization and encoding (utf-8), taking out words included in NLTK's English stopword list, using a conservative regular expression to remove references (e.g. Smith, et al.), and removing special characters like quotes and parenthesis. 
@@ -563,7 +563,7 @@ The assumption also ignores if a sentence contains more than one n-gram for an i
 Using this measure of co-occurrence, the lift of every co-occurrence of phenotypic items was calculated. Recall that given A, B, and C in a sentence:
 $$ \text{lift}(A,B,C) = \frac {P(A \cap B \cap C)} {P(A)*P(B)*P(C)}  $$
 Probabilities are calculated as the number of sentences where the item occurs divided by the total number of sentences.
-While studying all possible combinations of phenotypic items may be interesting for identifying significant subsets of phenotype groups or connections between phenotypes, we examined only the average lift of phenotypic items within a given phenotype.
+While studying all possible combinations of phenotypic items may be interesting for identifying significant subsets of phenotype groups or connections between phenotypes, which we briefly discuss in \ref{fig:log-lift}, we primarily examine the average lift of phenotypic items within a given phenotype.
 This allows for a simple classification of a phenotype as ``clinically significant" or ``not clinically significant"--this classification is discussed below.%
 
 For every co-occurrence, all possible subsets of co-occurring phenotypic items within phenotypes were also counted.
@@ -572,7 +572,7 @@ In this way, the lifts for any combination in the power set of all phenotypes \j
 This allows for convenient lookup of any co-occurrence of interest.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes returns a non-empty search.
 
-We made the assumption that co-occurrences with higher phenotype cardinality \jette{I think phenotype cardinality is mentioned before it is defined} should be favored (i.e., the more of the phenotype is represented, the more can be said about the significance of the phenotype as a whole). 
+We made the assumption that co-occurrences including more phenotypic items (we refer to this as higher ``phenotype cardinality" for convenience; see the third column of \fig {lift-process-cartoon.png} for examples of this ``cardinality") should be favored. That is, the more of the phenotype that is represented, the more can be said about the significance of the phenotype as a whole. 
 To serve this preference, we counted co-occurrences with the largest phenotype cardinality first, and then ignored any co-occurrence that was a subset of any larger co-occurrence. This was achieved by simply ordering the combinations in descending cardinality order, and greedily inserting the combination into a set if it was not a subset of an already counted combination. 
 This choice allows co-occurrences of any size to contribute to the average of a phenotype group but favors interactions including more phenotypes of the group (without double counting their subsets) assuming this is a better representation of the significance of the group as a whole.
 
@@ -581,8 +581,7 @@ If the probability of co-occurrence is higher than the rate of random co-occurre
 However, since these co-occurrences are subject to grammatical rules, etc., lifts for co-occurrences are nearly always greater than 1.
 As we are interested in filtering out all but clinical significance (ignoring significance introduced by grammar and language convention), we randomly generated phenotypes from a set of phenotypic items, and measured the lift significance of these ``phenotypes" to establish the level of lift significance introduced by the possible grammatical and language artifacts.
 
-We began analysis by placing phenotypic item co-occurrences into groups by the number of phenotypic items represented (regardless of the clinical phenotype group membership). 
-For convenience, we refer to the number of phenotypic items in a co-occurrence as the ``phenotype cardinality". 
+We began analysis by placing phenotypic item co-occurrences into groups by their phenotype cardinality (regardless of the clinical phenotype group membership). 
 We found that, across all co-occurrences among phenotypic items (this includes those from multiple phenotypes), lift was strongly positively dependent on the number of items included in the co-occurrence.
 In fact, lift appears to be almost perfectly exponential as a function of the number of items included in the co-occurrence, which is illustrated in Figure \ref{fig:log-lift}. 
 Thus, we divide each lift by the median of the lifts of that cardinality so that higher cardinality co-occurrences do not dominate the phenotype mean. 
@@ -665,7 +664,7 @@ In addition to the high--throughput generated phenotypes, we used randomly gener
 %\end{table}
 
 \subsection{Results}
-To determine the optimal number of n-grams to represent each phenotypic item, we simply performed a sweep search across several choices, the results of which are summarized in Figure \ref{fig:classificationVarNG}.
+To determine the optimal size of the phenotypic item synonym set (i.e., the number of ``relevant" n-grams to use), we performed a grid search over the set sizes, the results of which are summarized in Figure ref{fig:classificationVarNG}.
 Figure \ref{fig:classificationVarNG} shows the precision, recall and F1 score for classifying phenotypes to their ``significant" or ``not significant" annotator labels when characterized by different numbers of n-grams. 
 The choice of 6 n-grams resulted in classification with the best balance between precision and recall, achieving an F1 score of 0.87 (2 N-grams scored 0.88, but had lower precision).
 
@@ -700,7 +699,13 @@ The choice of 6 n-grams resulted in classification with the best balance between
 %\label{fig:kho-josh-posneg}
 %\end{figure}
 
-Using the above analysis, we then analyzed at the normalized lifts generated by the high-throughput methods. Figure \ref{fig:kho-josh-all} shows the normalized lift average of the phenotypes generated by Marble and Rubik (\cite {Ho:2014jc,Ho:2014da, wang2015rubik}). 
+
+
+We first examine the normalized lift averages of the randomly generated and curated phenotypes to establish a baseline for the difference between significant and not significant phenotypes. Figure \ref{fig:curatedPhenos} shows the distribution of average lifts for the two groups of phenotypes (represented, again, by a synonym set of 6 N-grams). 
+In the majority of cases the normalized lift average of the curated phenotypes is above that of the randomly generated phenotypes. 
+By choosing the optimal threshold, we are able to achieve 100\% true negative classification, and 80\% true positive classification, or an F1 score of 0.89. 
+
+Moving on from the separation of random and curated phenotypes, we applied this analysis to real world phenotypes generated by the high-throughput methods. Figure \ref{fig:kho-josh-all} shows the normalized lift average of the phenotypes generated by Marble and Rubik (\cite {Ho:2014jc,Ho:2014da, wang2015rubik}). 
 %Figure \ref{fig:kho-josh-all} shows the normalized lift averages for phenotypes labeled as "significant", "maybe significant" and "not significant". 
 Again, by determining the optimal lift threshold (determined to be 0.028 by exhaustion), we are able to classify ``significant" and ``not significant" phenotypes with an F1 score of 0.87. 
 
@@ -708,10 +713,6 @@ While we do not perform any classification on the possibly significant groups, b
 Annotators could use this analysis as evidence to give labels the phenotypes that may be significant.
 For example, if an annotator was not sure about the significance, he or she could use the average lift as another piece of information while making the decision.
 However, a more thorough analysis of the value of this and whether or not it would bias an annotator must be studied.
-
-Figure \ref{fig:curatedPhenos} shows the normalized lift average of the randomly generated and curated phenotypes, the items of which, again, are represented by 6 N-grams. 
-In the majority of cases the normalized lift average of the curated phenotypes is above that of the randomly generated phenotypes. 
-Similarly, by choosing the optimal threshold, we are able to achieve 100\% true negative classification, and 80\% true positive classification, or an F1 score of 0.89.
 
 We note that while lift thresholding classifies phenotypes with relative success in both high-throughput and curated phenotypes, the method does not provide a universal threshold guaranteed for all phenotypes. In addition, the majority of phenotypes are very close to the optimal threshold. This suggests that further work is needed to improve the predictive value of lift thresholding.
 
