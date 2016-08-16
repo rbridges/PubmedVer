@@ -568,11 +568,11 @@ This allows for a simple classification of a phenotype as ``clinically significa
 
 For every co-occurrence, all possible subsets of co-occurring phenotypic items within phenotypes were also counted.
 For example, when A, B, C, and D co-occurred in a sentence, a co-occurrence for (A,B,C), (B,C,D), (A,B), (A,C), and so forth, were counted.
-In this way, the lifts for any combination in the power set of all phenotypes \jette{phenotypic items?} that co-occurred were counted.
+In this way, the lifts for any combination in the power set of all phenotypic items that co-occurred were counted.
 This allows for convenient lookup of any co-occurrence of interest.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes returns a non-empty search.
 
-We made the assumption that co-occurrences including more phenotypic items (we refer to this as higher ``phenotype cardinality" for convenience; see the third column of \fig {lift-process-cartoon.png} for examples of this ``cardinality") should be favored. That is, the more of the phenotype that is represented, the more can be said about the significance of the phenotype as a whole. 
+We made the assumption that co-occurrences including more phenotypic items (we refer to this as higher ``phenotype cardinality" for convenience; see the third column of \ref{lift-process-cartoon.png} for examples of this ``cardinality") should be favored. That is, the more of the phenotype that is represented, the more can be said about the significance of the phenotype as a whole. 
 To serve this preference, we counted co-occurrences with the largest phenotype cardinality first, and then ignored any co-occurrence that was a subset of any larger co-occurrence. This was achieved by simply ordering the combinations in descending cardinality order, and greedily inserting the combination into a set if it was not a subset of an already counted combination. 
 This choice allows co-occurrences of any size to contribute to the average of a phenotype group but favors interactions including more phenotypes of the group (without double counting their subsets) assuming this is a better representation of the significance of the group as a whole.
 
@@ -664,14 +664,14 @@ In addition to the high--throughput generated phenotypes, we used randomly gener
 %\end{table}
 
 \subsection{Results}
-To determine the optimal size of the phenotypic item synonym set (i.e., the number of ``relevant" n-grams to use), we performed a grid search over the set sizes, the results of which are summarized in Figure ref{fig:classificationVarNG}.
+To determine the optimal size of the phenotypic item synonym set (i.e., the number of ``relevant" n-grams to use), we performed a grid search over the set sizes, the results of which are summarized in Figure \ref{fig:classificationVarNG}.
 Figure \ref{fig:classificationVarNG} shows the precision, recall and F1 score for classifying phenotypes to their ``significant" or ``not significant" annotator labels when characterized by different numbers of n-grams. 
 The choice of 6 n-grams resulted in classification with the best balance between precision and recall, achieving an F1 score of 0.87 (2 N-grams scored 0.88, but had lower precision).
 
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth] {classificationWithVariableNG.png}
-\caption{Classification Scores versus Size of Representative N-Gram Set}
+\caption{Classification Scores for Marble/Rubik Phenotypes versus size of Synonym Set}
 \label{fig:classificationVarNG}
 \end{figure}
 
