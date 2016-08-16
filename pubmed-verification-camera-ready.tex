@@ -572,7 +572,7 @@ In this way, the lifts for any combination in the power set of all phenotypic it
 This allows for convenient lookup of any co-occurrence of interest.
 While this complete set of co--occurrences is theoretically very large, not every combination of phenotypes returns a non-empty search.
 
-We made the assumption that co-occurrences including more phenotypic items (we refer to this as higher ``phenotype cardinality" for convenience; see the third column of \ref{lift-process-cartoon.png} for examples of this ``cardinality") should be favored. That is, the more of the phenotype that is represented, the more can be said about the significance of the phenotype as a whole. 
+We made the assumption that co-occurrences including more phenotypic items (we refer to this as higher ``phenotype cardinality" for convenience; see the third column of Figure \ref{fig:lift-process-cartoon} for examples of this ``cardinality") should be favored. That is, the more of the phenotype that is represented, the more can be said about the significance of the phenotype as a whole. 
 To serve this preference, we counted co-occurrences with the largest phenotype cardinality first, and then ignored any co-occurrence that was a subset of any larger co-occurrence. This was achieved by simply ordering the combinations in descending cardinality order, and greedily inserting the combination into a set if it was not a subset of an already counted combination. 
 This choice allows co-occurrences of any size to contribute to the average of a phenotype group but favors interactions including more phenotypes of the group (without double counting their subsets) assuming this is a better representation of the significance of the group as a whole.
 
