@@ -1,4 +1,4 @@
-% This is "sig-alternate.tex" V2.1 April 2013
+% This is "sig-alternate.tex" V2.0 May 2012
 % This file should be compiled with V2.5 of "sig-alternate.cls" May 2012
 %
 % This example file demonstrates the use of the 'sig-alternate.cls'
@@ -47,49 +47,28 @@
 
 \documentclass{sig-alternate}
 \graphicspath{{figures/}}
+\newfont{\mycrnotice}{ptmr8t at 7pt}
+\newfont{\myconfname}{ptmri8t at 7pt}
+\let\crnotice\mycrnotice%
+\let\confname\myconfname%
 
-\newcount\Comments   % 0 suppresses notes to selves in text
-\Comments=1               % TODO: set to 0 for final version
-\usepackage{color}
-\definecolor{purple}{rgb}{1,0,1}
-\newcommand{\kibitz}[2]{\ifnum\Comments=1\textcolor{#1}{#2}\fi}
-\newcommand{\joyce}[1]{\kibitz{purple}      {[Joyce: #1]}}
-\newcommand{\jette}[1]{\kibitz{red}      {[Jette: #1]}}
-\newcommand{\byron}[1]{\kibitz{blue}      {[Byron: #1]}}
-\newcommand{\joydeep}[1]{\kibitz{green}      {[Joydeep: #1]}}
-\usepackage{booktabs}
+\permission{Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.}
+\conferenceinfo{BCB'16,}{October 2--5, 2016, Seattle, WA, USA.}
+\copyrightetc{Copyright 2016 ACM \the\acmcopyr}
+\crdata{978-1-4503-4225-4/16/10\ ...\$15.00.\\
+http://dx.doi.org/10.1145/2975167.2985844}
+
+\clubpenalty=10000
+\widowpenalty = 10000
 
 \begin{document}
 
-% Copyright
-%\setcopyright{acmcopyright}
-%\setcopyright{acmlicensed}
-%\setcopyright{rightsretained}
-%\setcopyright{usgov}
-%\setcopyright{usgovmixed}
-%\setcopyright{cagov}
-%\setcopyright{cagovmixed}
-
-
-% DOI
-%\doi{10.475/123_4}
-
-% ISBN
-%\isbn{123-4567-24-567/08/06}
-
-%Conference
-%\conferenceinfo{PLDI '13}{June 16--19, 2013, Seattle, WA, USA}
-
-%\acmPrice{\$15.00}
-
-%
-% --- Author Metadata here ---
-\conferenceinfo{}{}
-%\CopyrightYear{2007} % Allows default copyright year (20XX) to be over-ridden - IF NEED BE.
-%\crdata{0-12345-67-8/90/01}  % Allows default copyright data (0-89791-88-6/97/05) to be over-ridden - IF NEED BE.
-% --- End of Author Metadata ---
-
 \title{Automated Verification of Phenotypes using PubMed}
+%\subtitle{
+%\titlenote{A full version of this paper is available as
+%\textit{Author's Guide to Preparing ACM SIG Proceedings Using
+%\LaTeX$2_\epsilon$\ and BibTeX} at
+%\texttt{www.acm.org/eaddress.htm}}}
 %
 % You need the command \numberofauthors to handle the 'placement
 % and alignment' of the authors beneath the title.
@@ -139,7 +118,7 @@ Ryan Bridges\\
 % 2nd. author
 \alignauthor
 Jette Henderson\\
-       \affaddr{University of Texas at Austin}\\
+       \affaddr{The University of Texas at Austin}\\
        \affaddr{Austin, TX 78712}\\
        \email{jette@ices.utexas.edu}
 % 3rd. author
@@ -155,7 +134,7 @@ Jette Henderson\\
        \email{byron@ccs.neu.edu}
 % 5th. author
 \alignauthor Joydeep Ghosh\\
-       \affaddr{University of Texas at Austin}\\
+       \affaddr{The University of Texas at Austin}\\
        \affaddr{Austin, TX 78712}\\
        \email{jghosh@utexas.edu}
 }
@@ -163,10 +142,7 @@ Jette Henderson\\
 % author on the opening page (as the 'third row') but we ask,
 % for aesthetic reasons that you place these 'additional authors'
 % in the \additional authors block, viz.
-%\additionalauthors{Additional authors: John Smith (The Th{\o}rv{\"a}ld Group,
-%email: {\texttt{jsmith@affiliation.org}}) and Julius P.~Kumquat
-%(The Kumquat Consortium, email: {\texttt{jpkumquat@consortium.net}}).}
-%\date{30 July 1999}
+
 % Just remember to make sure that the TOTAL number of authors
 % is the number that will appear on the first page PLUS the
 % number that will appear in the \additionalauthors section.
@@ -177,38 +153,14 @@ In the realm of data driven clinical research, medical concepts, or phenotypes, 
 When these groups are algorithmically generated, the most common method of verification is manual human annotation, which can be time consuming and sometimes inconsistent.
 In this paper, we propose a supervision-free method of verification that uses co-occurrence in PubMed articles to determine clinical significance.
 We demonstrate the efficacy of the method by 1) applying it to phenotypes generated through automatic machine learning methods and 2) showing it separates randomly generated groups of phenotypes from curated groups of known, clinical phenotypes. 
-%Further, this method has the potential to explain the underlying causes for phenotypes and to identify subsets of phenotype groups that are better predictors for a particular patient cluster.
-
 \end{abstract}
 
-
-%
-% The code below should be generated by the tool at
-% http://dl.acm.org/ccs.cfm
-% Please copy and paste the code instead of the example below. 
-%
-\begin{CCSXML}
-\end{CCSXML}
-
-%\ccsdesc[500]{Computer systems organization~Embedded systems}
-%\ccsdesc[300]{Computer systems organization~Redundancy}
-%\ccsdesc{Computer systems organization~Robotics}
-%\ccsdesc[100]{Networks~Network reliability}
-
-
-%
-% End generated code
-%
-
-%
-%  Use this command to print the description
-%
-\printccsdesc
-
-% We no longer use \terms command
-%\terms{Theory}
-
-%\keywords{ACM proceedings; \LaTeX; text tagging}
+% A category with the (minimum) three required fields
+\category{H.3.3}{Information Search and Retrieval}{Information filtering}
+%A category including the fourth, optional field follows...
+\category{I.2.7}{Natural Language Processing}{Text analysis}
+\category{J.3}{Life and Medical Sciences}{Health}
+\terms{Phenotype verification, Pubmed, co-occurrence analysis}
 
 \section{Introduction}
 
@@ -221,7 +173,7 @@ The flowchart depicts a series of characteristics that must be present in a pati
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth]{t2d-pheno.png}
-\caption{Type 2 diabetes phenotype from the Phenotype Knowledgebase \cite{kho_use_2012}, Source: \protect\url{https://phekb.org/phenotype/type-2-diabetes-mellitus}}
+\caption{Type 2 diabetes phenotype from the Phenotype Knowledgebase \cite{kho_use_2012}, Source: https://phekb.org/phenotype/type-2-diabetes-mellitus}
 \label{fig:t2d-pheno}
 \end{figure}
 
@@ -254,7 +206,7 @@ Thus, there is a need to develop an automated, data--driven process to serve as 
 %As data driven clinical research is used more in decisions for business and medicine, consistent phenotype verification will become increasingly important.
 In this paper, we present an automated framework that can provide third-party verifcation to facilitate and improve the annotation process and accuracy.
 %In this paper, we present a framework that automates the process of annotating candidate phenotypes, and has the potential to facilitate the annotation process and improve annotation accuracy.
-Our method records co--occurrences of phenotypic terms in PubMed\footnote{\url{http://www.ncbi.nlm.nih.gov/PubMed}}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
+Our method records co--occurrences of phenotypic terms in PubMed\footnote{http://www.ncbi.nlm.nih.gov/PubMed}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
 From this data, we use lift, a metric that summarizes if two or more items co--occur more often than average while accounting for the commonality of the item, to determine clinical relevance.
 %From co-occurrence data in PubMed, we calculate lift of phenotypes (lift is a metric summarizing if two or more items co-occur more often than on average, taking into account if an item is more common than another).
 %High lift between two or more phenotypic items suggests they are clinically related. 
@@ -281,6 +233,7 @@ We demonstrate the method is agnostic to the algorithm that generated the phenot
 %\caption{Example of a candidate phenotype where annotators disagree on ``clinical significance". Blue entries represent the patient's diagnoses, red entries are medications.}
 %\label{tab:pheno-example}
 %\end{table}
+
 
 \section{Related Work}
 While many researchers have used PubMed to explore and discover issues in biology, medicine, and health informatics, few have used PubMeb as a validation tool.
@@ -397,8 +350,8 @@ In order to achieve high recall, a phenotypic item must be recognized when a con
 In order to recognize such ``aliases," we utilized several medical ontologies to collect a set of closely related concepts and synonyms to a given phenotypic item.
 One of the most complete and commonly used ontologies is the ``Systemized Nomenclature of Medicine - Clinical Terms" (SNOMED-CT) ontology \cite{Wasserman2003}. The first order connections on the SNOMED-CT ontology graph for a concept provided a reasonable number of aliases that we could then filter.
 We supplemented SNOMED-CT with two other common ontologies, ICD--10 and the NCBI MeSH terms.
-During implementation, we extracted the SNOMED-CT and ICD--10 ontologies with a python library called Pymedtermino.\footnote{\url{http://pythonhosted.org/PyMedTermino/}}
-Biopython,\footnote{\url{http://biopython.org/}} a tool which also provides an interface to the Entrez tools, provided access to the MeSH terms.
+During implementation, we extracted the SNOMED-CT and ICD--10 ontologies with a python library called Pymedtermino.\footnote{http://pythonhosted.org/PyMedTermino/}
+Biopython,\footnote{http://biopython.org/} a tool which also provides an interface to the Entrez tools, provided access to the MeSH terms.
 We queried the Pymedtermino and Entrez APIs to collect aliases from these three ontologies, and then placed the related terms from each ontology into a (potentially large) list of candidate concepts that may represent the phenotypic item.
 After assigning every phenotype a pooled set of related concepts, we removed stopwords, and then extracted the set of all unigrams, bi-grams, and tri-grams from the related concepts.
 
@@ -451,9 +404,11 @@ Thus, the semantic similarity of the phenotypic item phrase and its n--grams are
 \begin{table*}
 \begin{center}
 \begin{tabular}{l l}
-\toprule
+%\toprule
+\hline
 Original representation &  Ranked list of n--grams \\
-\toprule
+%\toprule
+\hline
 `Angiotensin-converting enzyme inhibitors' & (`angiotensin-converting enzyme, inhibitor', 0.858)\\
 								 	& (`reaction ace inhibitor', 0.214)\\ 
 									& (`due ace', 0.207)\\
@@ -505,7 +460,8 @@ Original representation &  Ranked list of n--grams \\
 %								%& (`puerperium', 0.043478260869565216) \\
 %								& (`complications puerperium elsewhere', 0.028) \\ 
 %								%& (`complications puerperium elsewhere', 0.027667984189) \\ 
-\bottomrule
+\hline
+%\bottomrule
 \end{tabular}
 \end{center}
 \caption{One phenotypic item and its associated top eight most highly ranked representative n--grams. The score represents the percentage overlap of Pubmed searches between the term that appears in the phenotype and the ``synonyms'' extracted from various ontologies.}
@@ -611,12 +567,12 @@ generated phenotypes from a de--identified EHR dataset from Vanderbilt Universit
 For more details about the pre--processing of the data and phenotype generation, please refer to their paper \cite{wang2015rubik}.
 The authors graciously shared the file with 30 computational phenotypes as well as the annotations of the three domain experts.
 For each phenotype, each expert assigned one of the following three choices: 1) yes - the phenotype is clinically meaningful, 2) possible - the phenotype is possibly meaningful, and 3) not -- the phenotype is not clinically meaningful.
-The second set of candidate phenotypes were generated by Marble \cite{Ho:2014da} using the EHR data of a random subset of 10,000 patients from the \emph{ Centers for Medicare and Medicaid Services (CMS) Linkable 2008-2010 Medicare Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)}, a publicly available dataset with claim records that span 3 years.\footnote{For more information see \url{https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html}}
+The second set of candidate phenotypes were generated by Marble \cite{Ho:2014da} using the EHR data of a random subset of 10,000 patients from the \emph{Centers for Medicare and Medicaid Services (CMS) Linkable 2008-2010 Medicare Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)}, a publicly available dataset with claim records that span 3 years.\footnote{For more information see https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE\_Syn\_PUF.html}
 The 50 candidate phenotypes that Marble generated were then annotated by two domain experts in a manner identical to above.
 We combined the 30 Rubik-generated candidate phenotypes with the 50 Marble-generated candidate phenotypes and used the resulting set of 80 candidate phenotypes in the co-occurrence experiment.
 Of these 80 phenotypes,  the annotators found that approximately 14\% are clinically meaningful, 78\% are possibly significant and 8\% are not clinically meaningful.
 
-In addition to the high--throughput generated phenotypes, we used randomly generated phenotypes and curated phenotypes to establish lower and upper bounds, respectively, for the lift score that measures phenotype significance. The random phenotypes are generated by randomly selecting phenotypic items from a set of 1000+ phenotypic items generated by Marble/Rubik phenotypes not used in this work. The curated phenotypes were constructed by representing clinical narratives described in Epocrates references\footnote{\url{http://www.epocrates.com/}} and the AHRQ national guidelines\footnote{\url{http://www.ahrq.gov/professionals/clinicians-providers/guidelines-recommendations/index.html}} using phenotypic items. 
+In addition to the high--throughput generated phenotypes, we used randomly generated phenotypes and curated phenotypes to establish lower and upper bounds, respectively, for the lift score that measures phenotype significance. The random phenotypes are generated by randomly selecting phenotypic items from a set of 1000+ phenotypic items generated by Marble/Rubik phenotypes not used in this work. The curated phenotypes were constructed by representing clinical narratives described in Epocrates references\footnote{http://www.epocrates.com/} and the AHRQ national guidelines\footnote{http://www.ahrq.gov/professionals/clinicians-providers/guidelines-recommendations/index.html} using phenotypic items. 
 %Table \ref{tab:curated-pheno-example} shows a curated phenotype which represents treatment and diseases which disproportionately affect African Americans.
 
 %\begin{table}
@@ -743,8 +699,10 @@ Work to further verify and improve this method is merited, as a reasonably high 
 %APPENDICES are optional
 %\balancecolumns
 
+
 \bibliographystyle{abbrv}
 \bibliography{PubMed}  % sigproc.bib is the name of the Bibliography in this case
 %\balancecolumns % GM June 2007
 % That's all folks!
+
 \end{document}

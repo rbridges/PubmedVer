@@ -187,8 +187,8 @@ We demonstrate the efficacy of the method by 1) applying it to phenotypes genera
 % http://dl.acm.org/ccs.cfm
 % Please copy and paste the code instead of the example below. 
 %
-\begin{CCSXML}
-\end{CCSXML}
+%\begin{CCSXML}
+%\end{CCSXML}
 
 %\ccsdesc[500]{Computer systems organization~Embedded systems}
 %\ccsdesc[300]{Computer systems organization~Redundancy}
@@ -203,7 +203,7 @@ We demonstrate the efficacy of the method by 1) applying it to phenotypes genera
 %
 %  Use this command to print the description
 %
-\printccsdesc
+%\printccsdesc
 
 % We no longer use \terms command
 %\terms{Theory}
@@ -221,7 +221,7 @@ The flowchart depicts a series of characteristics that must be present in a pati
 \begin{figure} [t]
 \centering
 \includegraphics[width=\linewidth]{t2d-pheno.png}
-\caption{Type 2 diabetes phenotype from the Phenotype Knowledgebase \cite{kho_use_2012}, Source: \protect\url{https://phekb.org/phenotype/type-2-diabetes-mellitus}}
+\caption{Type 2 diabetes phenotype from the Phenotype Knowledgebase \cite{kho_use_2012}, Source: https://phekb.org/phenotype/type-2-diabetes-mellitus}
 \label{fig:t2d-pheno}
 \end{figure}
 
@@ -254,7 +254,7 @@ Thus, there is a need to develop an automated, data--driven process to serve as 
 %As data driven clinical research is used more in decisions for business and medicine, consistent phenotype verification will become increasingly important.
 In this paper, we present an automated framework that can provide third-party verifcation to facilitate and improve the annotation process and accuracy.
 %In this paper, we present a framework that automates the process of annotating candidate phenotypes, and has the potential to facilitate the annotation process and improve annotation accuracy.
-Our method records co--occurrences of phenotypic terms in PubMed\footnote{\url{http://www.ncbi.nlm.nih.gov/PubMed}}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
+Our method records co--occurrences of phenotypic terms in PubMed\footnote{http://www.ncbi.nlm.nih.gov/PubMed}, a publicly available repository for medical literature that contains over 40GB of medical literature from over 6000 journals. 
 From this data, we use lift, a metric that summarizes if two or more items co--occur more often than average while accounting for the commonality of the item, to determine clinical relevance.
 %From co-occurrence data in PubMed, we calculate lift of phenotypes (lift is a metric summarizing if two or more items co-occur more often than on average, taking into account if an item is more common than another).
 %High lift between two or more phenotypic items suggests they are clinically related. 
@@ -397,8 +397,8 @@ In order to achieve high recall, a phenotypic item must be recognized when a con
 In order to recognize such ``aliases," we utilized several medical ontologies to collect a set of closely related concepts and synonyms to a given phenotypic item.
 One of the most complete and commonly used ontologies is the ``Systemized Nomenclature of Medicine - Clinical Terms" (SNOMED-CT) ontology \cite{Wasserman2003}. The first order connections on the SNOMED-CT ontology graph for a concept provided a reasonable number of aliases that we could then filter.
 We supplemented SNOMED-CT with two other common ontologies, ICD--10 and the NCBI MeSH terms.
-During implementation, we extracted the SNOMED-CT and ICD--10 ontologies with a python library called Pymedtermino.\footnote{\url{http://pythonhosted.org/PyMedTermino/}}
-Biopython,\footnote{\url{http://biopython.org/}} a tool which also provides an interface to the Entrez tools, provided access to the MeSH terms.
+During implementation, we extracted the SNOMED-CT and ICD--10 ontologies with a python library called Pymedtermino.\footnote{http://pythonhosted.org/PyMedTermino/}
+Biopython,\footnote{http://biopython.org/} a tool which also provides an interface to the Entrez tools, provided access to the MeSH terms.
 We queried the Pymedtermino and Entrez APIs to collect aliases from these three ontologies, and then placed the related terms from each ontology into a (potentially large) list of candidate concepts that may represent the phenotypic item.
 After assigning every phenotype a pooled set of related concepts, we removed stopwords, and then extracted the set of all unigrams, bi-grams, and tri-grams from the related concepts.
 
@@ -611,12 +611,12 @@ generated phenotypes from a de--identified EHR dataset from Vanderbilt Universit
 For more details about the pre--processing of the data and phenotype generation, please refer to their paper \cite{wang2015rubik}.
 The authors graciously shared the file with 30 computational phenotypes as well as the annotations of the three domain experts.
 For each phenotype, each expert assigned one of the following three choices: 1) yes - the phenotype is clinically meaningful, 2) possible - the phenotype is possibly meaningful, and 3) not -- the phenotype is not clinically meaningful.
-The second set of candidate phenotypes were generated by Marble \cite{Ho:2014da} using the EHR data of a random subset of 10,000 patients from the \emph{ Centers for Medicare and Medicaid Services (CMS) Linkable 2008-2010 Medicare Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)}, a publicly available dataset with claim records that span 3 years.\footnote{For more information see \url{https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE_Syn_PUF.html}}
+The second set of candidate phenotypes were generated by Marble \cite{Ho:2014da} using the EHR data of a random subset of 10,000 patients from the \emph{Centers for Medicare and Medicaid Services (CMS) Linkable 2008-2010 Medicare Data Entrepreneurs' Synthetic Public Use File (DE-SynPUF)}, a publicly available dataset with claim records that span 3 years.\footnote{For more information see https://www.cms.gov/Research-Statistics-Data-and-Systems/Downloadable-Public-Use-Files/SynPUFs/DE\_Syn\_PUF.html}
 The 50 candidate phenotypes that Marble generated were then annotated by two domain experts in a manner identical to above.
 We combined the 30 Rubik-generated candidate phenotypes with the 50 Marble-generated candidate phenotypes and used the resulting set of 80 candidate phenotypes in the co-occurrence experiment.
 Of these 80 phenotypes,  the annotators found that approximately 14\% are clinically meaningful, 78\% are possibly significant and 8\% are not clinically meaningful.
 
-In addition to the high--throughput generated phenotypes, we used randomly generated phenotypes and curated phenotypes to establish lower and upper bounds, respectively, for the lift score that measures phenotype significance. The random phenotypes are generated by randomly selecting phenotypic items from a set of 1000+ phenotypic items generated by Marble/Rubik phenotypes not used in this work. The curated phenotypes were constructed by representing clinical narratives described in Epocrates references\footnote{\url{http://www.epocrates.com/}} and the AHRQ national guidelines\footnote{\url{http://www.ahrq.gov/professionals/clinicians-providers/guidelines-recommendations/index.html}} using phenotypic items. 
+In addition to the high--throughput generated phenotypes, we used randomly generated phenotypes and curated phenotypes to establish lower and upper bounds, respectively, for the lift score that measures phenotype significance. The random phenotypes are generated by randomly selecting phenotypic items from a set of 1000+ phenotypic items generated by Marble/Rubik phenotypes not used in this work. The curated phenotypes were constructed by representing clinical narratives described in Epocrates references\footnote{http://www.epocrates.com/} and the AHRQ national guidelines\footnote{http://www.ahrq.gov/professionals/clinicians-providers/guidelines-recommendations/index.html} using phenotypic items. 
 %Table \ref{tab:curated-pheno-example} shows a curated phenotype which represents treatment and diseases which disproportionately affect African Americans.
 
 %\begin{table}
